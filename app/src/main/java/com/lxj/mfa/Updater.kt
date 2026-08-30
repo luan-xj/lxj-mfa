@@ -143,6 +143,7 @@ class Updater(private val activity: AppCompatActivity) {
             setTitle(activity.getString(R.string.app_name) + " 更新")
             setDescription("v" + info.versionName)
             setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            setMimeType("application/vnd.android.package-archive")
             setDestinationInExternalFilesDir(activity, null, "updates/LXJ-MFA-update.apk")
         }
         downloadId = dm.enqueue(req)
@@ -183,20 +184,32 @@ class Updater(private val activity: AppCompatActivity) {
         downloadReceiver = null
     }
 
+    private fun isZipFile(file: File): Boolean = try {
+        val head = ByteArray(2)
+        val n = file.inputStream().use { it.read(head) }
+        n == 2 && head[0] == 0x50.toByte() && head[1] == 0x4B.toByte()
+    } catch (_: Exception) { false }
+
     private fun installApk() {
         val file = File(activity.getExternalFilesDir(null), "updates/LXJ-MFA-update.apk")
-        if (!file.exists()) {
-            Toast.makeText(activity, R.string.update_download_failed, Toast.LENGTH_LONG).show()
-            return
-        }
-        try {
-            val uri = FileProvider.getUriForFile(activity, activity.packageName + ".fileprovider", file)
-            val intent = Intent(Intent.ACTION_INSTALL_PACKAGE, uri).apply {
-                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        when {
+            !file.exists() || file.length() < 1_000_000 -> {
+                Toast.makeText(activity, R.string.update_download_failed, Toast.LENGTH_LONG).show()
             }
-            activity.startActivity(intent)
-        } catch (e: Exception) {
-            Toast.makeText(activity, "安装失败：${e.message}", Toast.LENGTH_LONG).show()
+            !isZipFile(file) -> {
+                Toast.makeText(activity, "下载文件不是有效的安装包，请重试", Toast.LENGTH_LONG).show()
+            }
+            else -> {
+                try {
+                    val uri = FileProvider.getUriForFile(activity, activity.packageName + ".fileprovider", file)
+                    val intent = Intent(Intent.ACTION_INSTALL_PACKAGE, uri).apply {
+                        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    }
+                    activity.startActivity(intent)
+                } catch (e: Exception) {
+                    Toast.makeText(activity, "安装失败：${e.message}", Toast.LENGTH_LONG).show()
+                }
+            }
         }
     }
 }
