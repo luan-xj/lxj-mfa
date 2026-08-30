@@ -1,7 +1,7 @@
 {
-  "versionCode": 6,
-  "versionName": "1.0.6",
-  "apkUrl": "https://gitee.com/luan_xiaojian/lxj-mfa/releases/download/v1.0.6/LXJ-MFA-v1.0.6.apk",
-  "changelog": "新增应用内“检查更新”与在线更新：发现新版本可一键下载并安装。",
+  "versionCode": 7,
+  "versionName": "1.0.7",
+  "apkUrl": "https://gitee.com/luan_xiaojian/lxj-mfa/releases/download/v1.0.7/LXJ-MFA-v1.0.7.apk",
+  "changelog": "设置页底部新增版本号显示。",
   "forceUpdate": false
 }

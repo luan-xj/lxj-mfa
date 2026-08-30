@@ -94,4 +94,5 @@
     <string name="update_no_permission">需要允许“安装未知应用”权限才能更新</string>
     <string name="update_check_failed">无法获取更新信息</string>
     <string name="update_changelog_label">更新内容：</string>
+    <string name="version_label">版本 v%1$s</string>
 </resources>

@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.lxj.mfa.Prefs
 import com.lxj.mfa.R
+import com.lxj.mfa.BuildConfig
 import com.lxj.mfa.Updater
 import com.lxj.mfa.databinding.ActivitySettingsBinding
 
@@ -54,6 +55,8 @@ class SettingsActivity : AppCompatActivity() {
         binding.btnCheckUpdate.setOnClickListener {
             updater.check(auto = false)
         }
+
+        binding.tvVersion.text = getString(R.string.version_label, BuildConfig.VERSION_NAME)
     }
 
     override fun onSupportNavigateUp(): Boolean {
