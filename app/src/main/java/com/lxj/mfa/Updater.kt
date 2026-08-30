@@ -167,7 +167,13 @@ class Updater(private val activity: AppCompatActivity) {
                 unregisterReceiver()
             }
         }
-        activity.registerReceiver(downloadReceiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+        val filter = IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            activity.registerReceiver(downloadReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
+        } else {
+            @Suppress("DEPRECATION")
+            activity.registerReceiver(downloadReceiver, filter)
+        }
     }
 
     private fun unregisterReceiver() {

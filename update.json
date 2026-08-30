@@ -1,7 +1,7 @@
 {
-  "versionCode": 10,
-  "versionName": "1.0.10",
-  "apkUrl": "https://gitee.com/luan_xiaojian/lxj-mfa/releases/download/v1.0.10/LXJ-MFA-v1.0.10.apk",
-  "changelog": "设置页「同步时加密备份」增加说明小字，与其他提示风格一致。",
+  "versionCode": 12,
+  "versionName": "1.0.12",
+  "apkUrl": "https://gitee.com/luan_xiaojian/lxj-mfa/releases/download/v1.0.12/LXJ-MFA-v1.0.12.apk",
+  "changelog": "验证在线更新链路（内容同 v1.0.11 修复版）。",
   "forceUpdate": false
 }
