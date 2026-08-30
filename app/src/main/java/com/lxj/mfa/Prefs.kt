@@ -76,4 +76,9 @@ object Prefs {
     fun getBgLockTimeout(ctx: Context) = sp(ctx).getInt("bg_lock_timeout", 0)
     fun setBgLockTimeout(ctx: Context, minutes: Int) =
         sp(ctx).edit().putInt("bg_lock_timeout", minutes).apply()
+
+    // ---------- 已忽略的更新版本（自动检查时不再提示） ----------
+    fun getIgnoredVersion(ctx: Context) = sp(ctx).getString("ignored_update_version", "") ?: ""
+    fun setIgnoredVersion(ctx: Context, v: String) =
+        sp(ctx).edit().putString("ignored_update_version", v).apply()
 }

@@ -12,11 +12,13 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.lxj.mfa.Prefs
 import com.lxj.mfa.R
+import com.lxj.mfa.Updater
 import com.lxj.mfa.databinding.ActivitySettingsBinding
 
 class SettingsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySettingsBinding
+    private lateinit var updater: Updater
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +26,7 @@ class SettingsActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        updater = Updater(this)
 
         binding.etRepo.setText(Prefs.getRepo(this))
         binding.etBranch.setText(Prefs.getBranch(this))
@@ -47,6 +50,9 @@ class SettingsActivity : AppCompatActivity() {
         binding.btnSyncPwd.setOnClickListener { showSetSyncPassword() }
         binding.btnHelp.setOnClickListener {
             startActivity(Intent(this, HelpActivity::class.java))
+        }
+        binding.btnCheckUpdate.setOnClickListener {
+            updater.check(auto = false)
         }
     }
 

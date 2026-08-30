@@ -34,13 +34,16 @@ import com.lxj.mfa.databinding.ItemAccountBinding
 import com.lxj.mfa.totp.Otp
 import com.lxj.mfa.totp.OtpAuth
 import com.lxj.mfa.totp.OtpInfo
+import com.lxj.mfa.Updater
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: AccountAdapter
+    private lateinit var updater: Updater
     private val handler = Handler(Looper.getMainLooper())
+    private companion object { var sCheckedUpdate = false }
     private val ticker = object : Runnable {
         override fun run() {
             adapter.tick()
@@ -54,6 +57,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         supportActionBar?.title = getString(R.string.app_name)
+        updater = Updater(this)
 
         adapter = AccountAdapter(
             onCopy = { copyCode(it) },
@@ -85,6 +89,10 @@ class MainActivity : AppCompatActivity() {
             return
         }
         handler.post(ticker)
+        if (!sCheckedUpdate) {
+            sCheckedUpdate = true
+            updater.check(auto = true)
+        }
     }
 
     override fun onPause() {
