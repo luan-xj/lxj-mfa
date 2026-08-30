@@ -1,7 +1,6 @@
 {
-  "versionCode": 16,
-  "versionName": "1.0.16",
-  "apkUrl": "https://gitee.com/luan_xiaojian/lxj-mfa/releases/download/v1.0.16/LXJ-MFA-v1.0.16.apk",
-  "changelog": "设置页「同步时加密备份」改为醒目卡片样式；崩溃日志界面顶部加显眼提示条并高亮「前往提交 Issue」按钮。",
-  "forceUpdate": false
+  "versionCode": 17,
+  "versionName": "1.0.17",
+  "apkUrl": "https://gitee.com/luan_xiaojian/lxj-mfa/releases/download/v1.0.17/LXJ-MFA-v1.0.17.apk",
+  "changelog": "优化崩溃日志界面：提示条置于日志上方并补充操作指引，清除日志按钮更醒目；README 改写为通用版。"
 }

@@ -30,8 +30,8 @@ class CrashActivity : AppCompatActivity() {
         val hasLog = CrashHandler.hasCrash(this)
 
         val banner = TextView(this).apply {
-            text = "如遇到崩溃，请复制上方日志并点击下方「前往提交 Issue」反馈给开发者。"
-            setPadding(24, 16, 24, 16)
+            text = "💡 提示：如遇到崩溃，请先「复制日志」，再点「清除日志」删除本机记录，最后点「前往提交 Issue」把日志贴到项目 Issues 反馈给开发者。"
+            setPadding(24, 18, 24, 18)
             textSize = 14f
             setTextColor(ContextCompat.getColor(this@CrashActivity, android.R.color.black))
             setBackgroundColor(ContextCompat.getColor(this@CrashActivity, R.color.primary_light))
@@ -70,6 +70,8 @@ class CrashActivity : AppCompatActivity() {
         val btnClear = Button(this).apply {
             text = getString(R.string.crash_clear)
             isEnabled = hasLog
+            setBackgroundColor(ContextCompat.getColor(this@CrashActivity, android.R.color.white))
+            setTextColor(ContextCompat.getColor(this@CrashActivity, R.color.primary))
             setOnClickListener {
                 CrashHandler.clearCrash(this@CrashActivity)
                 Toast.makeText(this@CrashActivity, R.string.crash_cleared, Toast.LENGTH_SHORT).show()
