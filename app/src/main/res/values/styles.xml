@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 基础主题（清新绿） -->
+    <style name="Theme.LXJMFA" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:colorBackground">@color/bg</item>
+        <item name="android:statusBarColor">@color/primary_dark</item>
+        <item name="android:navigationBarColor">@color/bg</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <!-- 无 ActionBar（自定义 Toolbar，避免与状态栏冲突） -->
+    <style name="Theme.LXJMFA.NoActionBar" parent="Theme.LXJMFA" />
+
+    <!-- 扫码界面全屏暗色 -->
+    <style name="Theme.LXJMFA.Zxing" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">#000000</item>
+    </style>
+
+</resources>

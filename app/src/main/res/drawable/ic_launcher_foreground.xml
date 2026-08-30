@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- 挂锁造型（替代原盾牌+MFA），白锁身 + 绿锁孔，清新可辨 -->
+    <!-- 锁梁（顶部 U 形，白色描边） -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="7"
+        android:strokeLineCap="round"
+        android:pathData="M40,52 L40,40 A14,14 0 0 1 68,40 L68,52" />
+
+    <!-- 锁身（白色圆角矩形） -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M33,52 H75 A6,6 0 0 1 81,58 V76 A6,6 0 0 1 75,82 H33 A6,6 0 0 1 27,76 V58 A6,6 0 0 1 33,52 Z" />
+
+    <!-- 锁孔（主题绿，圆 + 竖槽） -->
+    <path
+        android:fillColor="#1F7A5E"
+        android:pathData="M54,60 m-4.5,0 a4.5,4.5 0 1,0 9,0 a4.5,4.5 0 1,0 -9,0" />
+    <path
+        android:fillColor="#1F7A5E"
+        android:pathData="M51.5,64 H56.5 V73 H51.5 Z" />
+</vector>

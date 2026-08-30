@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LXJ-MFA</string>
+    <string name="lock_title">解锁 LXJ-MFA</string>
+    <string name="lock_subtitle">使用指纹或输入密码</string>
+    <string name="create_password_title">设置主密码</string>
+    <string name="create_password_hint">主密码用于解锁与本地加密</string>
+    <string name="password">密码</string>
+    <string name="confirm_password">确认密码</string>
+    <string name="unlock">解锁</string>
+    <string name="use_password">使用密码</string>
+    <string name="wrong_password">密码错误</string>
+    <string name="password_mismatch">两次输入的密码不一致</string>
+    <string name="password_set">密码已设置</string>
+    <string name="add_account">添加账号</string>
+    <string name="issuer">发行方</string>
+    <string name="label">账号名</string>
+    <string name="tag">标签</string>
+    <string name="type">类型</string>
+    <string name="algorithm">算法</string>
+    <string name="account_type">类型</string>
+    <string name="counter">计数器 (HOTP)</string>
+    <string name="secret">密钥 (Secret)</string>
+    <string name="search_hint">搜索账号、标签、类型…</string>
+    <string name="motp_hint">MOTP 密钥格式：十六进制密钥:PIN，如 0123456789ABCDEF:1234</string>
+    <string name="scan_qr">扫码导入</string>
+    <string name="save">保存</string>
+    <string name="cancel">取消</string>
+    <string name="settings">设置</string>
+    <string name="sync_now">立即同步到 Git</string>
+    <string name="pull_from_git">从 Git 拉取</string>
+    <string name="git_repo_url">Git 仓库地址 (HTTPS)</string>
+    <string name="git_branch">分支</string>
+    <string name="git_token">访问令牌 (Token)</string>
+    <string name="encrypt_backup">同步时加密备份</string>
+    <string name="lock_after_title">进入后台后锁定</string>
+    <string name="lock_after_summary">切到其它应用多久后需要重新解锁</string>
+    <string name="set_sync_password">设置同步密码</string>
+    <string name="sync_password_hint">用于加密 Git 备份，独立于主密码</string>
+    <string name="sync_password_set">同步密码已保存</string>
+    <string name="sync_password_needed">已开启加密备份，请先在设置中设置同步密码</string>
+    <string name="change_password">修改主密码</string>
+    <string-array name="bg_lock_options">
+        <item>立即</item>
+        <item>1 分钟</item>
+        <item>5 分钟</item>
+        <item>15 分钟</item>
+        <item>从不</item>
+    </string-array>
+    <string-array name="account_types">
+        <item>TOTP</item>
+        <item>HOTP</item>
+        <item>MOTP</item>
+        <item>STEAM</item>
+    </string-array>
+    <string-array name="algorithms">
+        <item>SHA1</item>
+        <item>SHA256</item>
+        <item>SHA512</item>
+    </string-array>
+    <string name="edit_account">编辑账号</string>
+    <string name="sync_success">同步成功</string>
+    <string name="pull_success">拉取成功</string>
+    <string name="sync_failed">同步失败：%1$s</string>
+    <string name="no_accounts">还没有账号，点右下角 + 添加</string>
+    <string name="copied">已复制验证码</string>
+    <string name="delete_account">删除该账号？</string>
+    <string name="about_text">LXJ-MFA · 本地加密 · 可同步至 Git</string>
+    <string name="lock_now">立即锁定</string>
+    <string name="help_title">使用说明</string>
+    <string name="help_intro">LXJ-MFA 是一款本地加密的多账号动态验证码（MFA / 2FA）管理工具，支持 TOTP / HOTP / MOTP / STEAM 四种类型，可选择性地把备份加密同步到 Git 仓库，换设备也能恢复。本说明介绍基本用法与安全要点。</string>
+    <string name="help_h_add">一、添加账号</string>
+    <string name="help_p_add">• 点主界面右下角「+」新建账号，可手动填写，也可点「扫码导入」扫描 otpauth:// 二维码。\n• 类型：TOTP（时间型，默认）、HOTP（计数器型，每次复制后计数器 +1）、MOTP（密钥格式 十六进制:PIN）、STEAM（固定 5 位）。\n• 算法：TOTP / HOTP 可选 SHA1 / SHA256 / SHA512。\n• 标签：给账号打标签，可在主界面搜索框按标签、发行方、账号名、类型、算法模糊查找。\n• 已保存账号可点编辑按钮修改。</string>
+    <string name="help_h_lock">二、解锁与锁定</string>
+    <string name="help_p_lock">• 首次使用需设置主密码，之后可用指纹或密码解锁。\n• 主界面右上角「立即锁定」可随时锁住软件。\n• 在设置里可设定「进入后台多久后自动锁定」（立即 / 1 / 5 / 15 分钟 / 从不）。</string>
+    <string name="help_h_sync">三、Git 同步</string>
+    <string name="help_p_sync">• 在设置里填写 Git 仓库地址（HTTPS）、分支、访问令牌（Token）。\n• 「同步密码」独立于本地主密码，仅用于加密 Git 备份文件；两端用同一个同步密码即可互相恢复。\n• 建议开启「同步时加密备份」，备份文件即使泄露也无法解密。\n• 推送：把本机账号上传到仓库；拉取：从仓库恢复到本机。\n• 注意：空仓库需先在远端建好带初始提交的分支，首次克隆才能成功。</string>
+    <string name="help_h_security">四、安全说明</string>
+    <string name="help_p_security">• 本地账号密钥用 Android 系统密钥库（AES）加密存储。\n• 主密码以 PBKDF2(SHA-256) 加盐哈希保存在本机，不以明文存储，也无法找回，请牢记。\n• Git 备份若开启加密，会使用同步密码（PBKDF2 + 随机盐）加密后上传。\n• 卸载软件会清除本机数据，重要账号请先同步到 Git。</string>
+    <string name="git_repo_hint">填写 https:// 开头的仓库地址（如 GitHub / 自建 Git）</string>
+    <string name="open_help">使用说明</string>
+    <string name="preview_title">预览验证码</string>
+    <string name="preview_next">next %1$s</string>
+    <string name="help_sign">—— LXJ</string>
+</resources>

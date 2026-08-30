@@ -1,0 +1,30 @@
+# Gradle 构建缓存（注意：本项目 .gradle 是指向本机目录的 junction，切勿提交）
+.gradle/
+**/.gradle/
+
+# 构建产物
+build/
+**/build/
+*.apk
+*.aar
+
+# 本地 SDK 路径配置（含机器特定路径，下载者需自行创建）
+local.properties
+
+# 日志
+*.log
+replay_pid*.log
+
+# IDE
+*.iml
+.idea/
+.project
+.classpath
+
+# 操作系统
+.DS_Store
+Thumbs.db
+
+# 签名密钥（如有，切勿提交）
+*.jks
+*.keystore
