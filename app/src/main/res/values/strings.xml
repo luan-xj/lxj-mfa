@@ -96,4 +96,14 @@
     <string name="update_check_failed">无法获取更新信息</string>
     <string name="update_changelog_label">更新内容：</string>
     <string name="version_label">版本 v%1$s</string>
+
+    <string name="view_crash_log">查看崩溃日志</string>
+    <string name="crash_no_log">暂无崩溃日志。</string>
+    <string name="crash_submit_hint">如遇崩溃，请将上方日志复制后提交到本项目 Issues（点击下方「前往提交 Issue」自动打开）。</string>
+    <string name="crash_copy">复制日志</string>
+    <string name="crash_copied">已复制，可粘贴到 Issue 中</string>
+    <string name="crash_clear">清除日志</string>
+    <string name="crash_cleared">已清除本地崩溃日志</string>
+    <string name="crash_open_issue">前往提交 Issue</string>
+    <string name="back">返回</string>
 </resources>

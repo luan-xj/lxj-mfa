@@ -2,7 +2,6 @@ package com.lxj.mfa
 
 import android.app.Activity
 import android.app.Application
-import android.content.Intent
 import android.os.Bundle
 
 /**
@@ -16,11 +15,6 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         CrashHandler.init(this)
-        if (CrashHandler.hasCrash(this)) {
-            val intent = Intent(this, CrashActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-        }
         registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
             override fun onActivityStarted(activity: Activity) {
                 activeCount++

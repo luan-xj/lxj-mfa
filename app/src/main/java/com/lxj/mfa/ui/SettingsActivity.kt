@@ -14,6 +14,8 @@ import com.lxj.mfa.Prefs
 import com.lxj.mfa.R
 import com.lxj.mfa.BuildConfig
 import com.lxj.mfa.Updater
+import com.lxj.mfa.CrashHandler
+import com.lxj.mfa.CrashActivity
 import com.lxj.mfa.databinding.ActivitySettingsBinding
 
 class SettingsActivity : AppCompatActivity() {
@@ -54,6 +56,12 @@ class SettingsActivity : AppCompatActivity() {
         }
         binding.btnCheckUpdate.setOnClickListener {
             updater.check(auto = false)
+        }
+        binding.btnViewLog.setOnClickListener {
+            startActivity(Intent(this, CrashActivity::class.java))
+        }
+        if (CrashHandler.hasCrash(this)) {
+            binding.btnViewLog.text = getString(R.string.view_crash_log) + "（有记录）"
         }
 
         binding.tvVersion.text = getString(R.string.version_label, BuildConfig.VERSION_NAME)
