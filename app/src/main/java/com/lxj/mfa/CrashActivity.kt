@@ -29,6 +29,14 @@ class CrashActivity : AppCompatActivity() {
         val logText = CrashHandler.readCrash(this)
         val hasLog = CrashHandler.hasCrash(this)
 
+        val banner = TextView(this).apply {
+            text = "如遇到崩溃，请复制上方日志并点击下方「前往提交 Issue」反馈给开发者。"
+            setPadding(24, 16, 24, 16)
+            textSize = 14f
+            setTextColor(ContextCompat.getColor(this@CrashActivity, android.R.color.black))
+            setBackgroundColor(ContextCompat.getColor(this@CrashActivity, R.color.primary_light))
+        }
+
         val tv = TextView(this).apply {
             text = if (hasLog) logText else getString(R.string.crash_no_log)
             setPadding(32, 32, 32, 32)
@@ -73,6 +81,8 @@ class CrashActivity : AppCompatActivity() {
 
         val btnOpenIssue = Button(this).apply {
             text = getString(R.string.crash_open_issue)
+            setTextColor(ContextCompat.getColor(this@CrashActivity, android.R.color.white))
+            setBackgroundColor(ContextCompat.getColor(this@CrashActivity, R.color.primary))
             setOnClickListener {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(issuesUrl)))
             }
@@ -99,6 +109,7 @@ class CrashActivity : AppCompatActivity() {
         val root = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             setBackgroundColor(ContextCompat.getColor(this@CrashActivity, android.R.color.white))
+            addView(banner)
             addView(scroll)
             addView(hint)
             addView(barTop)
