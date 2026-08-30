@@ -12,12 +12,14 @@ android {
         applicationId = "com.lxj.mfa"
         minSdk = 26
         targetSdk = 34
-        versionCode = 8
-        versionName = "1.0.8"
+        versionCode = 9
+        versionName = "1.0.9"
     }
 
     buildTypes {
         release {
+            // 复用 AGP 内置 debug 签名，保证各版本签名一致、可覆盖升级
+            signingConfig = signingConfigs.getByName("debug")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),

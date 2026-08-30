@@ -43,6 +43,12 @@
             android:parentActivityName=".ui.MainActivity"
             android:theme="@style/Theme.LXJMFA.NoActionBar" />
 
+        <!-- 崩溃日志展示（无 adb 环境下排查） -->
+        <activity
+            android:name=".CrashActivity"
+            android:exported="false"
+            android:theme="@style/Theme.LXJMFA.NoActionBar" />
+
         <!-- zxing-android-embedded 提供的扫码 Activity -->
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"

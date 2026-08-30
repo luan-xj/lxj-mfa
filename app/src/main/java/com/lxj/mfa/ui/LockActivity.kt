@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import com.lxj.mfa.AppState
@@ -38,7 +39,18 @@ class LockActivity : AppCompatActivity() {
         binding.btnUnlock.setOnClickListener { onUnlockClicked(hasPw) }
         binding.btnFingerprint.setOnClickListener { showBiometric() }
 
-        if (hasPw) showBiometric()
+        if (hasPw && canUseBiometric()) showBiometric()
+    }
+
+    private fun canUseBiometric(): Boolean {
+        return try {
+            val bm = BiometricManager.from(this)
+            bm.canAuthenticate(
+                BiometricManager.Authenticators.BIOMETRIC_WEAK
+            ) == BiometricManager.BIOMETRIC_SUCCESS
+        } catch (e: Exception) {
+            false
+        }
     }
 
     private fun onUnlockClicked(hasPw: Boolean) {
@@ -56,18 +68,23 @@ class LockActivity : AppCompatActivity() {
     }
 
     private fun showBiometric() {
-        val prompt = BiometricPrompt(this, executor, object : BiometricPrompt.AuthenticationCallback() {
-            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) = finishUnlock()
-            override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                // 用户点击「使用密码」，保持密码输入框可用即可
-            }
-        })
-        val info = BiometricPrompt.PromptInfo.Builder()
-            .setTitle(getString(R.string.lock_title))
-            .setSubtitle(getString(R.string.lock_subtitle))
-            .setNegativeButtonText(getString(R.string.use_password))
-            .build()
-        prompt.authenticate(info)
+        if (!canUseBiometric()) return
+        try {
+            val prompt = BiometricPrompt(this, executor, object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) = finishUnlock()
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    // 用户点击「使用密码」，保持密码输入框可用即可
+                }
+            })
+            val info = BiometricPrompt.PromptInfo.Builder()
+                .setTitle(getString(R.string.lock_title))
+                .setSubtitle(getString(R.string.lock_subtitle))
+                .setNegativeButtonText(getString(R.string.use_password))
+                .build()
+            prompt.authenticate(info)
+        } catch (e: Exception) {
+            // 生物识别不可用或初始化失败，退回密码解锁
+        }
     }
 
     private fun finishUnlock() {

@@ -1,7 +1,7 @@
 {
-  "versionCode": 8,
-  "versionName": "1.0.8",
-  "apkUrl": "https://gitee.com/luan_xiaojian/lxj-mfa/releases/download/v1.0.8/LXJ-MFA-v1.0.8.apk",
-  "changelog": "修复在线更新下载完成后不弹出安装的问题。",
+  "versionCode": 9,
+  "versionName": "1.0.9",
+  "apkUrl": "https://gitee.com/luan_xiaojian/lxj-mfa/releases/download/v1.0.9/LXJ-MFA-v1.0.9.apk",
+  "changelog": "新增崩溃自捕获（无 adb 也能在应用内查看错误堆栈）；加固生物识别解锁，修复部分国产 ROM 上启动闪退。",
   "forceUpdate": false
 }
