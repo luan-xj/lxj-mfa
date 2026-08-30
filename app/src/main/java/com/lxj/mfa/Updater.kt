@@ -183,10 +183,14 @@ class Updater(private val activity: AppCompatActivity) {
             Toast.makeText(activity, R.string.update_download_failed, Toast.LENGTH_LONG).show()
             return
         }
-        val uri = FileProvider.getUriForFile(activity, activity.packageName + ".fileprovider", file)
-        val intent = Intent(Intent.ACTION_INSTALL_PACKAGE, uri).apply {
-            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        try {
+            val uri = FileProvider.getUriForFile(activity, activity.packageName + ".fileprovider", file)
+            val intent = Intent(Intent.ACTION_INSTALL_PACKAGE, uri).apply {
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
+            activity.startActivity(intent)
+        } catch (e: Exception) {
+            Toast.makeText(activity, "安装失败：${e.message}", Toast.LENGTH_LONG).show()
         }
-        activity.startActivity(intent)
     }
 }
