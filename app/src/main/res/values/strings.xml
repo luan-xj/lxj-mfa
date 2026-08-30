@@ -33,6 +33,7 @@
     <string name="git_branch">分支</string>
     <string name="git_token">访问令牌 (Token)</string>
     <string name="encrypt_backup">同步时加密备份</string>
+    <string name="encrypt_backup_hint">开启后，Git 备份会用「同步密码」加密，即使仓库泄露也无法解密</string>
     <string name="lock_after_title">进入后台后锁定</string>
     <string name="lock_after_summary">切到其它应用多久后需要重新解锁</string>
     <string name="set_sync_password">设置同步密码</string>
