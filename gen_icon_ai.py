@@ -126,6 +126,15 @@ def main():
     #  background is a static white XML shape (drawable/ic_launcher_background.xml) -
     #  a plain white PNG gets optimized away by AAPT2, so it lives in XML on purpose.
     #  foreground is the shield only, scaled inside the safe zone.
+    #  Generate at every density bucket so high-DPI devices don't upscale a single
+    #  108px raster (which looked blurry on xxxhdpi). Geometry is identical; only
+    #  pixel resolution increases. ss is bumped for the larger sizes to stay crisp.
+    FG = {"mdpi": 108, "hdpi": 162, "xhdpi": 216, "xxhdpi": 324, "xxxhdpi": 432}
+    for dens, px in FG.items():
+        d = f"{BASE}/drawable-{dens}"
+        os.makedirs(d, exist_ok=True)
+        draw_foreground(px, poly, ss=4).save(f"{d}/ic_launcher_foreground.png")
+    # Keep a no-density fallback too (mdpi-equivalent), harmless.
     os.makedirs(f"{BASE}/drawable", exist_ok=True)
     draw_foreground(108, poly).save(f"{BASE}/drawable/ic_launcher_foreground.png")
 
