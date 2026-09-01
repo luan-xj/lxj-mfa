@@ -1,6 +1,6 @@
 {
-  "versionCode": 24,
-  "versionName": "1.0.24",
-  "apkUrl": "https://gitee.com/LXJ1203/lxj-mfa/releases/download/v1.0.24/LXJ-MFA-v1.0.24-release.apk",
-  "changelog": "图标进一步放大并加宽（横向 +18%，纵向占 93%，上下留约 3.5% 边距），绿色盾牌 + 白色 LXJ/MFA 文字，无阴影。"
+  "versionCode": 25,
+  "versionName": "1.0.25",
+  "apkUrl": "https://gitee.com/LXJ1203/lxj-mfa/releases/download/v1.0.25/LXJ-MFA-v1.0.25-release.apk",
+  "changelog": "图标改回 Android 自适应图标（adaptive icon），绿盾主图不变，消除 ColorOS 启动器自动添加的白框；无字阴影。"
 }
