@@ -1,6 +1,6 @@
 {
-  "versionCode": 30,
-  "versionName": "1.0.30",
-  "apkUrl": "https://gitee.com/LXJ1203/lxj-mfa/releases/download/v1.0.30/LXJ-MFA-v1.0.30-release.apk",
-  "changelog": "修复桌面图标被裁切：自适应图标 background 改为纯白 XML 底板、foreground 只放盾牌并缩到 58x66dp 安全区内（原先两层同图且盾牌 84dp 超出系统 72dp 可见区被裁）。"
+  "versionCode": 31,
+  "versionName": "1.0.31",
+  "apkUrl": "https://gitee.com/LXJ1203/lxj-mfa/releases/download/v1.0.31/LXJ-MFA-v1.0.31-release.apk",
+  "changelog": "修复桌面图标在高密度屏（xxxhdpi）下被放大模糊：自适应图标 foreground 按密度分桶生成（最高 432px），系统按设备像素密度取对应分辨率，不再把单张 108px 放大 4 倍。"
 }
