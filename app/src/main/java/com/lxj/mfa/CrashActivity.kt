@@ -64,6 +64,8 @@ class CrashActivity : AppCompatActivity() {
         val btnCopy = Button(this).apply {
             text = getString(R.string.crash_copy)
             isEnabled = hasLog
+            setTextColor(ContextCompat.getColor(this@CrashActivity, android.R.color.white))
+            setBackgroundColor(ContextCompat.getColor(this@CrashActivity, R.color.primary))
             layoutParams = LinearLayout.LayoutParams(
                 0,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -79,8 +81,8 @@ class CrashActivity : AppCompatActivity() {
         val btnClear = Button(this).apply {
             text = getString(R.string.crash_clear)
             isEnabled = hasLog
-            setBackgroundColor(ContextCompat.getColor(this@CrashActivity, android.R.color.white))
-            setTextColor(ContextCompat.getColor(this@CrashActivity, R.color.primary))
+            setTextColor(ContextCompat.getColor(this@CrashActivity, android.R.color.white))
+            setBackgroundColor(ContextCompat.getColor(this@CrashActivity, R.color.primary))
             layoutParams = LinearLayout.LayoutParams(
                 0,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -111,6 +113,8 @@ class CrashActivity : AppCompatActivity() {
 
         val btnBack = Button(this).apply {
             text = getString(R.string.back)
+            setTextColor(ContextCompat.getColor(this@CrashActivity, android.R.color.white))
+            setBackgroundColor(ContextCompat.getColor(this@CrashActivity, R.color.primary))
             layoutParams = LinearLayout.LayoutParams(
                 0,
                 ViewGroup.LayoutParams.WRAP_CONTENT,

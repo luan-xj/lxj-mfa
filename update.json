@@ -1,6 +1,6 @@
 {
-  "versionCode": 18,
-  "versionName": "1.0.18",
-  "apkUrl": "https://gitee.com/luan_xiaojian/lxj-mfa/releases/download/v1.0.18/LXJ-MFA-v1.0.18.apk",
-  "changelog": "修复崩溃日志界面底部按钮（复制/清除/提交Issue/返回）被超长日志挤出屏幕的问题：ScrollView 改用 layout_weight 占中间空间，按钮栏固定底部可见。"
+  "versionCode": 19,
+  "versionName": "1.0.19",
+  "apkUrl": "https://gitee.com/luan_xiaojian/lxj-mfa/releases/download/v1.0.19/LXJ-MFA-v1.0.19.apk",
+  "changelog": "账号页验证码预览「next」后加冒号；崩溃日志界面四个按钮统一为绿色。"
 }

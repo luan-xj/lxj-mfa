@@ -81,7 +81,7 @@
     <string name="git_repo_hint">填写 https:// 开头的仓库地址（如 GitHub / 自建 Git）</string>
     <string name="open_help">使用说明</string>
     <string name="preview_title">预览验证码</string>
-    <string name="preview_next">next %1$s</string>
+    <string name="preview_next">next: %1$s</string>
     <string name="help_sign">—— LXJ</string>
 
     <string name="update_check">检查更新</string>
