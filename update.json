@@ -1,6 +1,6 @@
 {
-  "versionCode": 28,
-  "versionName": "1.0.28",
-  "apkUrl": "https://gitee.com/LXJ1203/lxj-mfa/releases/download/v1.0.28/LXJ-MFA-v1.0.28-release.apk",
-  "changelog": "直接使用截图作为图标；账号页左上角去掉 LXJ-MFA 文字只留图标；日志页4个按钮改为圆角；清理 v1.0.21~v1.0.26 图标试错 release。"
+  "versionCode": 29,
+  "versionName": "1.0.29",
+  "apkUrl": "https://gitee.com/LXJ1203/lxj-mfa/releases/download/v1.0.29/LXJ-MFA-v1.0.29-release.apk",
+  "changelog": "AI 矢量重绘图标：白色圆角方形底板 + 绿色盾牌 + 白色 LXJ/MFA，盾牌轮廓按参考图测量还原；桌面启动图标与账号页左上角统一使用同一矢量版。"
 }
