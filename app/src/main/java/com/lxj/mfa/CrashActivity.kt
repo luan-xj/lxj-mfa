@@ -65,7 +65,7 @@ class CrashActivity : AppCompatActivity() {
             text = getString(R.string.crash_copy)
             isEnabled = hasLog
             setTextColor(ContextCompat.getColor(this@CrashActivity, android.R.color.white))
-            setBackgroundColor(ContextCompat.getColor(this@CrashActivity, R.color.primary))
+            background = ContextCompat.getDrawable(this@CrashActivity, R.drawable.bg_btn_rounded_primary)
             layoutParams = LinearLayout.LayoutParams(
                 0,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -82,7 +82,7 @@ class CrashActivity : AppCompatActivity() {
             text = getString(R.string.crash_clear)
             isEnabled = hasLog
             setTextColor(ContextCompat.getColor(this@CrashActivity, android.R.color.white))
-            setBackgroundColor(ContextCompat.getColor(this@CrashActivity, R.color.primary))
+            background = ContextCompat.getDrawable(this@CrashActivity, R.drawable.bg_btn_rounded_primary)
             layoutParams = LinearLayout.LayoutParams(
                 0,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -100,7 +100,7 @@ class CrashActivity : AppCompatActivity() {
         val btnOpenIssue = Button(this).apply {
             text = getString(R.string.crash_open_issue)
             setTextColor(ContextCompat.getColor(this@CrashActivity, android.R.color.white))
-            setBackgroundColor(ContextCompat.getColor(this@CrashActivity, R.color.primary))
+            background = ContextCompat.getDrawable(this@CrashActivity, R.drawable.bg_btn_rounded_primary)
             layoutParams = LinearLayout.LayoutParams(
                 0,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -114,7 +114,7 @@ class CrashActivity : AppCompatActivity() {
         val btnBack = Button(this).apply {
             text = getString(R.string.back)
             setTextColor(ContextCompat.getColor(this@CrashActivity, android.R.color.white))
-            setBackgroundColor(ContextCompat.getColor(this@CrashActivity, R.color.primary))
+            background = ContextCompat.getDrawable(this@CrashActivity, R.drawable.bg_btn_rounded_primary)
             layoutParams = LinearLayout.LayoutParams(
                 0,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
