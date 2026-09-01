@@ -1,6 +1,6 @@
 {
-  "versionCode": 22,
-  "versionName": "1.0.22",
-  "apkUrl": "https://gitee.com/LXJ1203/lxj-mfa/releases/download/v1.0.22/LXJ-MFA-v1.0.22-release.apk",
-  "changelog": "图标更换为用户指定的新盾牌样式（绿色盾牌 + 白色 LXJ/MFA 文字，无阴影），并迁移仓库至 LXJ1203/lxj-mfa。"
+  "versionCode": 23,
+  "versionName": "1.0.23",
+  "apkUrl": "https://gitee.com/LXJ1203/lxj-mfa/releases/download/v1.0.23/LXJ-MFA-v1.0.23-release.apk",
+  "changelog": "图标按比例放大并加宽（横向 +12%，上下留边距），绿色盾牌 + 白色 LXJ/MFA 文字，无阴影。"
 }
