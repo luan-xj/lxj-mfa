@@ -68,7 +68,15 @@ def draw_fitted_text(d, text, cx, cy, target_h, target_w, S):
         x += adv[i] + spacing
 
 
-def draw_icon(size, poly, plate=True, ss=4):
+def scale_around_center(poly, specs, k):
+    """Scale shield polygon + text specs about the canvas center by factor k."""
+    sp = [(0.5 + (x - 0.5) * k, 0.5 + (y - 0.5) * k) for x, y in poly]
+    ss = [(t, 0.5 + (cx - 0.5) * k, 0.5 + (cy - 0.5) * k, th * k, tw * k)
+          for t, cx, cy, th, tw in specs]
+    return sp, ss
+
+
+def draw_icon(size, poly, specs=TEXT_SPECS, plate=True, ss=4):
     """Render the icon at `size` px with `ss`x supersampling."""
     S = size * ss
     img = Image.new("RGBA", (S, S), (0, 0, 0, 0))
@@ -76,9 +84,31 @@ def draw_icon(size, poly, plate=True, ss=4):
     if plate:
         d.rounded_rectangle([0, 0, S - 1, S - 1], radius=int(CORNER_R * S), fill=PLATE)
     d.polygon([(x * S, y * S) for x, y in poly], fill=GREEN)
-    for text, cx, cy, th, tw in TEXT_SPECS:
+    for text, cx, cy, th, tw in specs:
         draw_fitted_text(d, text, cx, cy, th, tw, S)
     return img.resize((size, size), Image.LANCZOS)
+
+
+# Adaptive-icon geometry:
+# Layers are 108dp. The system masks to ~72dp, so content must live inside the
+# central 66dp safe circle. To keep the shield at 78% of the *visible* icon
+# (matching the reference), it must be 0.78 * 72 / 108 = 52% of the layer.
+SAFE_SCALE = 0.63
+
+
+def draw_background(size, ss=4):
+    """Adaptive background: opaque white plate only (no shield)."""
+    S = size * ss
+    img = Image.new("RGBA", (S, S), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    d.rounded_rectangle([0, 0, S - 1, S - 1], radius=int(CORNER_R * S), fill=PLATE)
+    return img.resize((size, size), Image.LANCZOS)
+
+
+def draw_foreground(size, poly, ss=4):
+    """Adaptive foreground: shield + text only, scaled into the safe zone."""
+    sp, specs = scale_around_center(poly, TEXT_SPECS, SAFE_SCALE)
+    return draw_icon(size, sp, specs, plate=False, ss=ss)
 
 
 def main():
@@ -92,10 +122,12 @@ def main():
         os.makedirs(d, exist_ok=True)
         draw_icon(size, poly).save(f"{d}/ic_launcher.png")
 
-    # adaptive layers (108dp) - same image so it fills without a system white frame
+    # adaptive layers (108dp):
+    #  background is a static white XML shape (drawable/ic_launcher_background.xml) -
+    #  a plain white PNG gets optimized away by AAPT2, so it lives in XML on purpose.
+    #  foreground is the shield only, scaled inside the safe zone.
     os.makedirs(f"{BASE}/drawable", exist_ok=True)
-    draw_icon(108, poly).save(f"{BASE}/drawable/ic_launcher_background.png")
-    draw_icon(108, poly).save(f"{BASE}/drawable/ic_launcher_foreground.png")
+    draw_foreground(108, poly).save(f"{BASE}/drawable/ic_launcher_foreground.png")
 
     # toolbar logo: same rounded plate + shield
     LOGO = {"mdpi": 36, "hdpi": 54, "xhdpi": 72, "xxhdpi": 96, "xxxhdpi": 144}
