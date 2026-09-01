@@ -370,7 +370,7 @@ class MainActivity : AppCompatActivity() {
                 val next = runCatching {
                     Otp.codeAt(a, secret, System.currentTimeMillis() + period * 1000L)
                 }.getOrElse { "" }
-                h.b.tvNext.text = "next " + formatCode(next)
+                h.b.tvNext.text = getString(R.string.preview_next, formatCode(next))
                 h.b.tvNext.visibility = View.VISIBLE
             } else {
                 h.b.pbProgress.visibility = View.GONE
@@ -399,7 +399,7 @@ class MainActivity : AppCompatActivity() {
                 val next = runCatching {
                     Otp.codeAt(a, secret, System.currentTimeMillis() + period * 1000L)
                 }.getOrElse { "" }
-                h.b.tvNext.text = "next " + formatCode(next)
+                h.b.tvNext.text = getString(R.string.preview_next, formatCode(next))
             }
         }
     }

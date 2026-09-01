@@ -70,7 +70,7 @@ class CrashActivity : AppCompatActivity() {
                 0,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 1f
-            )
+            ).apply { setMargins(8, 0, 8, 0) }
             setOnClickListener {
                 val cm = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                 cm.setPrimaryClip(ClipData.newPlainText("crash", logText))
@@ -87,7 +87,7 @@ class CrashActivity : AppCompatActivity() {
                 0,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 1f
-            )
+            ).apply { setMargins(8, 0, 8, 0) }
             setOnClickListener {
                 CrashHandler.clearCrash(this@CrashActivity)
                 Toast.makeText(this@CrashActivity, R.string.crash_cleared, Toast.LENGTH_SHORT).show()
@@ -105,7 +105,7 @@ class CrashActivity : AppCompatActivity() {
                 0,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 1f
-            )
+            ).apply { setMargins(8, 0, 8, 0) }
             setOnClickListener {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(issuesUrl)))
             }
@@ -119,7 +119,7 @@ class CrashActivity : AppCompatActivity() {
                 0,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 1f
-            )
+            ).apply { setMargins(8, 0, 8, 0) }
             setOnClickListener { finish() }
         }
 
