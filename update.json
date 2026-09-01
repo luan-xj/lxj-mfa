@@ -1,6 +1,6 @@
 {
-  "versionCode": 26,
-  "versionName": "1.0.26",
-  "apkUrl": "https://gitee.com/LXJ1203/lxj-mfa/releases/download/v1.0.26/LXJ-MFA-v1.0.26-release.apk",
-  "changelog": "修复启动图标空白：自适应图标背景层改为不透明绿底（之前透明层被 ColorOS 渲染成空白）；账号页左上角 LXJ-MFA 文字替换为绿盾图标。"
+  "versionCode": 27,
+  "versionName": "1.0.27",
+  "apkUrl": "https://gitee.com/LXJ1203/lxj-mfa/releases/download/v1.0.27/LXJ-MFA-v1.0.27-release.apk",
+  "changelog": "图标完全按参考样式重绘：白底圆角矩形 + 绿色盾牌 + 白色 LXJ/MFA 文字；账号页左上角仅保留图标，不再显示文字。"
 }
