@@ -7,6 +7,7 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.ScrollView
@@ -17,7 +18,9 @@ import androidx.core.content.ContextCompat
 
 /**
  * 崩溃日志查看器：由设置页「查看崩溃日志」进入。
- * 展示历史崩溃堆栈，可复制并提交到本项目 Issues，也可清除。
+ * 展示历史崩溃堆栈，可复制 / 清除并提交到本项目 Issues。
+ * 布局要点：ScrollView 用 layout_weight=1 占中间剩余空间，按钮栏固定底部可见，
+ * 否则 ScrollView 按内容撑高会把底部按钮整排挤出屏幕外。
  */
 class CrashActivity : AppCompatActivity() {
 
@@ -35,11 +38,15 @@ class CrashActivity : AppCompatActivity() {
             textSize = 14f
             setTextColor(ContextCompat.getColor(this@CrashActivity, android.R.color.black))
             setBackgroundColor(ContextCompat.getColor(this@CrashActivity, R.color.primary_light))
+            layoutParams = LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
         }
 
         val tv = TextView(this).apply {
             text = if (hasLog) logText else getString(R.string.crash_no_log)
-            setPadding(32, 32, 32, 32)
+            setPadding(24, 16, 24, 16)
             textSize = 11f
             setTextIsSelectable(true)
             typeface = Typeface.MONOSPACE
@@ -47,19 +54,21 @@ class CrashActivity : AppCompatActivity() {
 
         val scroll = ScrollView(this).apply {
             addView(tv)
-            setPadding(16, 16, 16, 16)
-        }
-
-        val hint = TextView(this).apply {
-            text = getString(R.string.crash_submit_hint)
-            setPadding(24, 8, 24, 8)
-            textSize = 13f
-            setTextColor(ContextCompat.getColor(this@CrashActivity, android.R.color.black))
+            layoutParams = LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                0,
+                1f
+            )
         }
 
         val btnCopy = Button(this).apply {
             text = getString(R.string.crash_copy)
             isEnabled = hasLog
+            layoutParams = LinearLayout.LayoutParams(
+                0,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                1f
+            )
             setOnClickListener {
                 val cm = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                 cm.setPrimaryClip(ClipData.newPlainText("crash", logText))
@@ -72,6 +81,11 @@ class CrashActivity : AppCompatActivity() {
             isEnabled = hasLog
             setBackgroundColor(ContextCompat.getColor(this@CrashActivity, android.R.color.white))
             setTextColor(ContextCompat.getColor(this@CrashActivity, R.color.primary))
+            layoutParams = LinearLayout.LayoutParams(
+                0,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                1f
+            )
             setOnClickListener {
                 CrashHandler.clearCrash(this@CrashActivity)
                 Toast.makeText(this@CrashActivity, R.string.crash_cleared, Toast.LENGTH_SHORT).show()
@@ -85,6 +99,11 @@ class CrashActivity : AppCompatActivity() {
             text = getString(R.string.crash_open_issue)
             setTextColor(ContextCompat.getColor(this@CrashActivity, android.R.color.white))
             setBackgroundColor(ContextCompat.getColor(this@CrashActivity, R.color.primary))
+            layoutParams = LinearLayout.LayoutParams(
+                0,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                1f
+            )
             setOnClickListener {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(issuesUrl)))
             }
@@ -92,12 +111,17 @@ class CrashActivity : AppCompatActivity() {
 
         val btnBack = Button(this).apply {
             text = getString(R.string.back)
+            layoutParams = LinearLayout.LayoutParams(
+                0,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                1f
+            )
             setOnClickListener { finish() }
         }
 
         val barTop = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
-            setPadding(16, 12, 16, 4)
+            setPadding(16, 10, 16, 4)
             addView(btnCopy)
             addView(btnClear)
         }
@@ -110,10 +134,13 @@ class CrashActivity : AppCompatActivity() {
 
         val root = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
             setBackgroundColor(ContextCompat.getColor(this@CrashActivity, android.R.color.white))
             addView(banner)
             addView(scroll)
-            addView(hint)
             addView(barTop)
             addView(barBottom)
         }
