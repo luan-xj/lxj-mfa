@@ -10,4 +10,6 @@
     <color name="text_primary">#163A2F</color>
     <color name="text_secondary">#5E7A70</color>
     <color name="danger">#D9534F</color>
+    <!-- 自适应图标底板（纯白，系统按设备形状裁切） -->
+    <color name="ic_launcher_background">#FFFFFF</color>
 </resources>

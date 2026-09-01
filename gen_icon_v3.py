@@ -20,6 +20,25 @@ def save_scaled(src, size, out_path):
     canvas.paste(src_im, (x, y), src_im)
     canvas.save(out_path)
 
+def save_logo_rounded(src, size, out_path):
+    """Toolbar logo: strip the white rounded-rect background, keep only the shield
+    with its rounded outline, and place on a transparent square canvas.
+    Result is the green shield with rounded edges, no white box."""
+    import numpy as np
+    src_im = Image.open(src).convert("RGBA")
+    arr = np.array(src_im)
+    # mask out near-white background
+    white = (arr[:,:,0] > 235) & (arr[:,:,1] > 235) & (arr[:,:,2] > 235)
+    arr[:,:,3] = np.where(white, 0, arr[:,:,3])
+    shield = Image.fromarray(arr, "RGBA")
+    # fit into square, keep aspect
+    shield.thumbnail((size, size), Image.LANCZOS)
+    canvas = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+    x = (size - shield.width) // 2
+    y = (size - shield.height) // 2
+    canvas.paste(shield, (x, y), shield)
+    canvas.save(out_path)
+
 def main():
     # Adaptive icon layers: 108x108 dp; use the same image for both bg and fg
     # so the exact screenshot is always shown regardless of device shape crop.
@@ -34,12 +53,12 @@ def main():
         ensure_dir(d)
         save_scaled(SRC, size, f"{d}/ic_launcher.png")
 
-    # Toolbar logo: transparent background, fit inside square
+    # Toolbar logo: rounded shield, no white background
     LOGO = {"mdpi": 36, "hdpi": 54, "xhdpi": 72, "xxhdpi": 96, "xxxhdpi": 144}
     for dens, size in LOGO.items():
         d = f"{BASE}/drawable-{dens}"
         ensure_dir(d)
-        save_scaled(SRC, size, f"{d}/ic_app_logo.png")
+        save_logo_rounded(SRC, size, f"{d}/ic_app_logo.png")
 
     print("Icon assets generated from user screenshot.")
 
