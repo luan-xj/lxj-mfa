@@ -12,8 +12,8 @@ android {
         applicationId = "com.lxj.mfa"
         minSdk = 26
         targetSdk = 34
-        versionCode = 25
-        versionName = "1.0.25"
+        versionCode = 26
+        versionName = "1.0.26"
     }
 
     buildTypes {

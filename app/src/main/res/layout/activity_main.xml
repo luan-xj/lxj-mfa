@@ -18,7 +18,7 @@
             android:fitsSystemWindows="true"
             android:background="@color/primary"
             app:titleTextColor="@android:color/white"
-            app:title="@string/app_name" />
+            app:logo="@drawable/ic_app_logo" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
