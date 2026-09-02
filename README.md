@@ -18,10 +18,11 @@ LXJ-MFA 用原生 Kotlin 写成，支持 TOTP / HOTP / MOTP / STEAM 等常见动
 
 这些截图基于真实布局与配色渲染，展示应用的核心界面：
 
+
 <div align="center">
-  <img src="https://gitee.com/LXJ1203/lxj-mfa/raw/master/screenshots/home.png" alt="主界面" width="280" />
-  <img src="https://gitee.com/LXJ1203/lxj-mfa/raw/master/screenshots/add.png" alt="添加账号" width="280" />
-  <img src="https://gitee.com/LXJ1203/lxj-mfa/raw/master/screenshots/data.png" alt="数据与备份" width="280" />
+  <img src="https://gitee.com/LXJ1203/lxj-mfa/raw/master/screenshots/home.jpg" alt="主界面" width="280" />
+  <img src="https://gitee.com/LXJ1203/lxj-mfa/raw/master/screenshots/add.jpg" alt="添加账号" width="280" />
+  <img src="https://gitee.com/LXJ1203/lxj-mfa/raw/master/screenshots/data.jpg" alt="数据与备份" width="280" />
 </div>
 
 ## 功能特性
