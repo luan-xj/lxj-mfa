@@ -20,11 +20,11 @@ LXJ-MFA 用原生 Kotlin 写成，支持 TOTP / HOTP / MOTP / STEAM 等常见动
 
 
 <div align="center">
-  <img src="https://gitee.com/LXJ1203/lxj-mfa/raw/master/screenshots/locked.jpg" alt="锁定" width="60" height="auto" />
-  <img src="https://gitee.com/LXJ1203/lxj-mfa/raw/master/screenshots/home.jpg" alt="主界面" width="60" height="auto" />
-  <img src="https://gitee.com/LXJ1203/lxj-mfa/raw/master/screenshots/add.jpg" alt="添加账号" width="60" height="auto" />
-  <img src="https://gitee.com/LXJ1203/lxj-mfa/raw/master/screenshots/data.jpg" alt="数据与备份" width="60" height="auto" />
-  <img src="https://gitee.com/LXJ1203/lxj-mfa/raw/master/screenshots/menu.jpg" alt="菜单" width="60" height="auto" />
+  <img src="https://gitee.com/LXJ1203/lxj-mfa/raw/master/screenshots/locked.jpg" alt="锁定" width="160" height="auto" />
+  <img src="https://gitee.com/LXJ1203/lxj-mfa/raw/master/screenshots/home.jpg" alt="主界面" width="160" height="auto" />
+  <img src="https://gitee.com/LXJ1203/lxj-mfa/raw/master/screenshots/add.jpg" alt="添加账号" width="160" height="auto" />
+  <img src="https://gitee.com/LXJ1203/lxj-mfa/raw/master/screenshots/data.jpg" alt="数据与备份" width="160" height="auto" />
+  <img src="https://gitee.com/LXJ1203/lxj-mfa/raw/master/screenshots/menu.jpg" alt="菜单" width="160" height="auto" />
 </div>
 
 ## 功能特性
