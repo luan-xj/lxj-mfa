@@ -32,6 +32,10 @@
     <string name="git_repo_url">Git 仓库地址 (HTTPS)</string>
     <string name="git_branch">分支</string>
     <string name="git_token">访问令牌 (Token)</string>
+    <string name="show_token">显示令牌</string>
+    <string name="hide_token">隐藏令牌</string>
+    <string name="reauth_title">验证主密码</string>
+    <string name="reauth_hint">查看令牌需先输入主密码</string>
     <string name="encrypt_backup">同步时加密备份</string>
     <string name="encrypt_backup_hint">开启后，Git 备份会用「同步密码」加密，即使仓库泄露也无法解密</string>
     <string name="lock_after_title">进入后台后锁定</string>

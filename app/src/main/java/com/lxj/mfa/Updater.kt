@@ -24,26 +24,30 @@ import org.json.JSONObject
 import java.io.File
 import java.net.HttpURLConnection
 import java.net.URL
+import java.security.MessageDigest
 
 data class UpdateInfo(
     val versionCode: Int,
     val versionName: String,
     val apkUrl: String,
     val changelog: String,
-    val forceUpdate: Boolean
+    val forceUpdate: Boolean,
+    val sha256: String = ""
 )
 
 /**
  * 应用内更新：从 Gitee 仓库读取 update.json，比较版本后一键下载安装。
  * 调用 check(auto) 即可；auto=true 时静默（仅新版本且未被忽略才提示）。
+ * 下载完成后会校验 APK 的 SHA256，防止下载到被篡改的安装包。
  */
 class Updater(private val activity: AppCompatActivity) {
 
-    private val updateUrl = "https://gitee.com/luan_xiaojian/lxj-mfa/raw/master/update.json"
+    private val updateUrl = "https://gitee.com/LXJ1203/lxj-mfa/raw/master/update.json"
 
     private var pendingInstall: (() -> Unit)? = null
     private var downloadId: Long = -1
     private var downloadReceiver: BroadcastReceiver? = null
+    private var currentInfo: UpdateInfo? = null
 
     private val permLauncher: ActivityResultLauncher<Intent> =
         activity.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -91,7 +95,8 @@ class Updater(private val activity: AppCompatActivity) {
                 versionName = j.optString("versionName", ""),
                 apkUrl = j.optString("apkUrl", ""),
                 changelog = j.optString("changelog", ""),
-                forceUpdate = j.optBoolean("forceUpdate", false)
+                forceUpdate = j.optBoolean("forceUpdate", false),
+                sha256 = j.optString("sha256", "")
             )
         } catch (e: Exception) {
             null
@@ -136,6 +141,7 @@ class Updater(private val activity: AppCompatActivity) {
         activity.packageManager.canRequestPackageInstalls()
 
     private fun download(info: UpdateInfo) {
+        currentInfo = info
         val dir = File(activity.getExternalFilesDir(null), "updates")
         dir.mkdirs()
         val dm = activity.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
@@ -192,12 +198,18 @@ class Updater(private val activity: AppCompatActivity) {
 
     private fun installApk() {
         val file = File(activity.getExternalFilesDir(null), "updates/LXJ-MFA-update.apk")
+        val info = currentInfo
         when {
             !file.exists() || file.length() < 1_000_000 -> {
                 Toast.makeText(activity, R.string.update_download_failed, Toast.LENGTH_LONG).show()
             }
             !isZipFile(file) -> {
                 Toast.makeText(activity, "下载文件不是有效的安装包，请重试", Toast.LENGTH_LONG).show()
+            }
+            info != null && info.sha256.isNotEmpty() && !sha256(file).equals(info.sha256, ignoreCase = true) -> {
+                // 校验失败：安装包可能被篡改或下载损坏，拒绝安装
+                Toast.makeText(activity, "安装包校验失败（SHA256 不匹配），已阻止安装", Toast.LENGTH_LONG).show()
+                file.delete()
             }
             else -> {
                 try {
@@ -211,5 +223,17 @@ class Updater(private val activity: AppCompatActivity) {
                 }
             }
         }
+    }
+
+    private fun sha256(file: File): String {
+        val md = MessageDigest.getInstance("SHA-256")
+        file.inputStream().use { fis ->
+            val buf = ByteArray(8192)
+            var n: Int
+            while (fis.read(buf).also { n = it } != -1) {
+                md.update(buf, 0, n)
+            }
+        }
+        return md.digest().joinToString("") { "%02x".format(it) }
     }
 }

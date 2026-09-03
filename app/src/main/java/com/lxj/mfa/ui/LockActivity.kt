@@ -2,6 +2,7 @@ package com.lxj.mfa.ui
 
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
@@ -23,6 +24,11 @@ class LockActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // 防止密码输入被截图 / 录屏
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_SECURE,
+            WindowManager.LayoutParams.FLAG_SECURE
+        )
         binding = ActivityLockBinding.inflate(layoutInflater)
         setContentView(binding.root)
         executor = ContextCompat.getMainExecutor(this)

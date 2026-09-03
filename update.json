@@ -1,6 +1,7 @@
 {
-  "versionCode": 31,
-  "versionName": "1.0.31",
-  "apkUrl": "https://gitee.com/LXJ1203/lxj-mfa/releases/download/v1.0.31/LXJ-MFA-v1.0.31-release.apk",
-  "changelog": "修复桌面图标在高密度屏（xxxhdpi）下被放大模糊：自适应图标 foreground 按密度分桶生成（最高 432px），系统按设备像素密度取对应分辨率，不再把单张 108px 放大 4 倍。"
+  "versionCode": 32,
+  "versionName": "1.0.32",
+  "apkUrl": "https://gitee.com/LXJ1203/lxj-mfa/releases/download/v1.0.32/LXJ-MFA-v1.0.32-release.apk",
+  "sha256": "e7b78f087f1742c0dad359358fc25280c9f9401f18940497b5d23ae2f235354a",
+  "changelog": "安全加固：Git 访问令牌与同步密码改为 Keystore 加密存储（不再明文）；设置页令牌默认打码、需主密码验证后才可查看；Lock/主界面/设置页防截屏（FLAG_SECURE）；明文备份推送到 Git 前强制警告；应用内更新修复仓库地址并增加 APK 的 SHA256 校验；复制验证码 30 秒后自动清空；扫码 60 秒无结果自动关闭相机；自动更新检查 24 小时节流。"
 }

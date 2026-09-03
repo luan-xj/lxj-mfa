@@ -3,9 +3,8 @@ package com.lxj.mfa.ui
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
-import android.widget.ArrayAdapter
+import android.view.WindowManager
 import android.widget.LinearLayout
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -23,8 +22,17 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingsBinding
     private lateinit var updater: Updater
 
+    // 令牌默认打码，仅在主密码验证后才显示明文
+    private var realToken: String = ""
+    private var tokenRevealed = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // 防止令牌/密码被截图或录屏
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_SECURE,
+            WindowManager.LayoutParams.FLAG_SECURE
+        )
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
@@ -33,7 +41,11 @@ class SettingsActivity : AppCompatActivity() {
 
         binding.etRepo.setText(Prefs.getRepo(this))
         binding.etBranch.setText(Prefs.getBranch(this))
-        binding.etToken.setText(Prefs.getToken(this))
+        // 令牌不显示明文，默认用占位符；需主密码验证后才展示
+        realToken = Prefs.getToken(this)
+        binding.etToken.setText("••••••••••••")
+        binding.etToken.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+        binding.btnShowToken.setOnClickListener { toggleToken() }
         binding.swEncrypt.isChecked = Prefs.getEncryptBackup(this)
 
         setupBgLockSpinner()
@@ -75,8 +87,53 @@ class SettingsActivity : AppCompatActivity() {
     private fun saveGitConfig() {
         Prefs.setRepo(this, binding.etRepo.text.toString().trim())
         Prefs.setBranch(this, binding.etBranch.text.toString().trim().ifEmpty { "main" })
-        Prefs.setToken(this, binding.etToken.text.toString().trim())
+        // 令牌仅在用户主动“显示”并可能编辑后才写回；否则保留原密文，避免把占位符当明文保存
+        if (tokenRevealed) {
+            Prefs.setToken(this, binding.etToken.text.toString().trim())
+        }
         Prefs.setEncryptBackup(this, binding.swEncrypt.isChecked)
+    }
+
+    private fun toggleToken() {
+        if (tokenRevealed) {
+            tokenRevealed = false
+            binding.etToken.setText("••••••••••••")
+            binding.etToken.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            binding.etToken.setSelection(binding.etToken.text?.length ?: 0)
+            binding.btnShowToken.setText(R.string.show_token)
+        } else {
+            reauthMasterPassword {
+                tokenRevealed = true
+                binding.etToken.setText(realToken)
+                binding.etToken.inputType = InputType.TYPE_CLASS_TEXT
+                binding.etToken.setSelection(binding.etToken.text?.length ?: 0)
+                binding.btnShowToken.setText(R.string.hide_token)
+            }
+        }
+    }
+
+    /** 重新验证主密码后才允许查看敏感信息（令牌）。 */
+    private fun reauthMasterPassword(onSuccess: () -> Unit) {
+        if (!Prefs.hasPassword(this)) { onSuccess(); return }
+        val et = TextInputEditText(this).apply {
+            hint = getString(R.string.password)
+            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+        }
+        val layout = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(60, 40, 60, 10)
+            addView(et)
+        }
+        AlertDialog.Builder(this)
+            .setTitle(R.string.reauth_title)
+            .setMessage(R.string.reauth_hint)
+            .setView(layout)
+            .setPositiveButton(R.string.unlock) { _, _ ->
+                if (Prefs.verifyPassword(this, et.text.toString())) onSuccess()
+                else Toast.makeText(this, R.string.wrong_password, Toast.LENGTH_SHORT).show()
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
     }
 
     // 下拉选项对应分钟数：-1 从不，0 立即，其余为分钟

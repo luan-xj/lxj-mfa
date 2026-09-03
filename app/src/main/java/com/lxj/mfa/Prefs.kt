@@ -52,15 +52,46 @@ object Prefs {
     fun setRepo(ctx: Context, v: String) = sp(ctx).edit().putString("git_repo", v).apply()
     fun getBranch(ctx: Context) = sp(ctx).getString("git_branch", "main") ?: "main"
     fun setBranch(ctx: Context, v: String) = sp(ctx).edit().putString("git_branch", v).apply()
-    fun getToken(ctx: Context) = sp(ctx).getString("git_token", "") ?: ""
-    fun setToken(ctx: Context, v: String) = sp(ctx).edit().putString("git_token", v).apply()
-    fun getEncryptBackup(ctx: Context) = sp(ctx).getBoolean("encrypt_backup", false)
+    // Git Token 用 AndroidKeyStore(AES) 加密后再存，不以明文落盘。
+    // 兼容旧版明文：若解密失败，视为旧数据，迁移为密文后返回明文。
+    fun getToken(ctx: Context): String {
+        val raw = sp(ctx).getString("git_token", "") ?: ""
+        if (raw.isEmpty()) return ""
+        return try {
+            Crypto.decrypt(raw)
+        } catch (_: Exception) {
+            setToken(ctx, raw) // 旧版明文 → 迁移为加密
+            raw
+        }
+    }
+
+    fun setToken(ctx: Context, v: String) {
+        val enc = if (v.isEmpty()) "" else Crypto.encrypt(v)
+        sp(ctx).edit().putString("git_token", enc).apply()
+    }
+    // 默认开启加密备份，避免账号密钥以明文落入 Git 历史（旧安装如果已存过 false，会保留原值）
+    fun getEncryptBackup(ctx: Context) = sp(ctx).getBoolean("encrypt_backup", true)
     fun setEncryptBackup(ctx: Context, v: Boolean) = sp(ctx).edit().putBoolean("encrypt_backup", v).apply()
 
     // ---------- 同步密码（独立于主密码，仅用于 Git 备份加解密） ----------
+    // 同样用 Keystore 加密存储，不以明文落盘；旧版明文自动迁移。
     fun hasSyncPassword(ctx: Context) = sp(ctx).contains("sync_pw")
-    fun setSyncPassword(ctx: Context, pw: String) = sp(ctx).edit().putString("sync_pw", pw).apply()
-    fun getSyncPassword(ctx: Context) = sp(ctx).getString("sync_pw", "") ?: ""
+
+    fun setSyncPassword(ctx: Context, pw: String) {
+        val enc = if (pw.isEmpty()) "" else Crypto.encrypt(pw)
+        sp(ctx).edit().putString("sync_pw", enc).apply()
+    }
+
+    fun getSyncPassword(ctx: Context): String {
+        val raw = sp(ctx).getString("sync_pw", "") ?: ""
+        if (raw.isEmpty()) return ""
+        return try {
+            Crypto.decrypt(raw)
+        } catch (_: Exception) {
+            raw // 极旧兜底：若不是密文则当作明文直接返回（不会再写回明文）
+        }
+    }
+
     fun clearSyncPassword(ctx: Context) = sp(ctx).edit().remove("sync_pw").apply()
 
     // ---------- 备份加密 salt（与主密码独立的一份） ----------
@@ -81,4 +112,9 @@ object Prefs {
     fun getIgnoredVersion(ctx: Context) = sp(ctx).getString("ignored_update_version", "") ?: ""
     fun setIgnoredVersion(ctx: Context, v: String) =
         sp(ctx).edit().putString("ignored_update_version", v).apply()
+
+    // ---------- 自动更新检查时间戳（24 小时节流，减少冷启动网络请求） ----------
+    fun getLastUpdateCheck(ctx: Context) = sp(ctx).getLong("last_update_check", 0L)
+    fun setLastUpdateCheck(ctx: Context, ms: Long) =
+        sp(ctx).edit().putLong("last_update_check", ms).apply()
 }

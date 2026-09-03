@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.Editable
+import android.view.WindowManager
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.Menu
@@ -53,6 +54,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // 防止动态验证码被截图 / 录屏
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_SECURE,
+            WindowManager.LayoutParams.FLAG_SECURE
+        )
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
@@ -89,8 +95,11 @@ class MainActivity : AppCompatActivity() {
             return
         }
         handler.post(ticker)
-        if (!sCheckedUpdate) {
+        // 自动检查更新：进程内只查一次，且距上次检查超过 24 小时才再查（减少冷启动网络请求）
+        val now = System.currentTimeMillis()
+        if (!sCheckedUpdate && now - Prefs.getLastUpdateCheck(this) > 24 * 3600_000L) {
             sCheckedUpdate = true
+            Prefs.setLastUpdateCheck(this, now)
             updater.check(auto = true)
         }
     }
@@ -133,6 +142,15 @@ class MainActivity : AppCompatActivity() {
         val cm = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         cm.setPrimaryClip(ClipData.newPlainText("mfa", code))
         Toast.makeText(this, R.string.copied, Toast.LENGTH_SHORT).show()
+        // 30 秒后自动清空剪贴板，避免验证码长期滞留被其它应用读取
+        handler.postDelayed({
+            val cur = (getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
+                .primaryClip?.getItemAt(0)?.text?.toString()
+            if (cur == code) {
+                (getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
+                    .setPrimaryClip(ClipData.newPlainText("", ""))
+            }
+        }, 30_000L)
         // HOTP：每次使用（复制）后计数器自增
         if (a.type.uppercase() == "HOTP") {
             lifecycleScope.launch {
@@ -255,6 +273,10 @@ class MainActivity : AppCompatActivity() {
                 .setOrientationLocked(true)
                 .setPrompt("扫描 MFA 二维码")
                 .initiateScan()
+            // 60 秒无结果自动关闭相机，避免长时间空扫耗电发热
+            handler.postDelayed({
+                runCatching { finishActivity(IntentIntegrator.REQUEST_CODE) }
+            }, 60_000L)
         }
         view.findViewById<View>(R.id.btn_cancel).setOnClickListener { dialog.dismiss() }
         view.findViewById<View>(R.id.btn_save).setOnClickListener {
