@@ -116,7 +116,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.action_settings -> { startActivity(Intent(this, SettingsActivity::class.java)); true }
-        R.id.action_sync -> { SyncRunner.push(this) { Toast.makeText(this, it, Toast.LENGTH_LONG).show() }; true }
         R.id.action_lock -> { lockNow(); true }
         else -> super.onOptionsItemSelected(item)
     }
