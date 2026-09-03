@@ -1,7 +1,7 @@
 {
-  "versionCode": 33,
-  "versionName": "1.0.33",
-  "apkUrl": "https://gitee.com/LXJ1203/lxj-mfa/releases/download/v1.0.33/LXJ-MFA-v1.0.33-release.apk",
-  "sha256": "1b13b44a57068284d0593f7d8af64bd8a141cc1f66b2008159b61b7078a8a401",
-  "changelog": "Git 同步支持自定义用户名（替换此前写死的 lxj-mfa，HTTPS Token 认证更规范）；README 新增「支持的 Git 平台与常见踩坑」章节（Gitee/GitHub/GitLab/AtomGit/自建 Git 均可，含分支名、仅支持 HTTPS、Token 权限、明文备份留痕等注意事项）；修复崩溃反馈与贡献说明中指向旧仓库地址的链接。"
+  "versionCode": 34,
+  "versionName": "1.0.34",
+  "apkUrl": "https://gitee.com/LXJ1203/lxj-mfa/releases/download/v1.0.34/LXJ-MFA-v1.0.34-release.apk",
+  "sha256": "f682f3f4da5100804d554abe2d31860a30ab7e573442373a16bb723123512d4e",
+  "changelog": "账号页（主界面）工具栏的「同步」按钮已隐藏，同步入口统一收敛到「设置」页，避免误操作；README 中浏览器插件版仓库地址改为可点击超链接（显示文本 lxj-mfa-extension）。应用内更新器已校验 SHA256，下载后被篡改会自动拦截。"
 }
