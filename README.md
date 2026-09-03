@@ -37,7 +37,7 @@ LXJ-MFA 用原生 Kotlin 写成，支持 TOTP / HOTP / MOTP / STEAM 等常见动
 | 检索 | 按 issuer / label / tag / type / algorithm 模糊搜索 |
 | 本地安全 | 主密码 + `PBKDF2WithHmacSHA256` + Android Keystore + `EncryptedSharedPreferences` |
 | 启动锁 | 指纹 / 面容 / 密码锁定 |
-| 备份同步 | Git 加密备份与多设备同步（JGit + HTTPS Token） |
+| 备份同步 | Git 加密备份与多设备同步（JGit + HTTPS Token，支持 Gitee / GitHub / GitLab / AtomGit / 自建 Git） |
 | 在线更新 | 应用内检查更新、下载并一键安装 |
 | 崩溃反馈 | 自动记录崩溃堆栈，可复制并提交到项目 Issues |
 
@@ -66,12 +66,42 @@ LXJ-MFA 用原生 Kotlin 写成，支持 TOTP / HOTP / MOTP / STEAM 等常见动
 
 应用内「设置 → 使用说明」提供完整使用指引。
 
+## 支持的 Git 平台与常见踩坑
+
+### 同步原理
+
+LXJ-MFA 的 Git 同步基于 [JGit](https://eclipse.dev/jgit/)，使用 **HTTPS + 个人访问令牌（PAT）** 进行 `clone / pull / push`，不依赖任何特定平台的私有 API。因此只要是「支持 HTTPS + Token 鉴权」的 Git 托管服务都可以用，包括：
+
+| 平台 | 可用性 | 注意事项 |
+| --- | --- | --- |
+| Gitee | ✅ 已实测 | Token 需有仓库读写权限 |
+| GitHub | ✅ 可用 | Token 需 `repo` 权限；新仓库默认分支多为 `main` |
+| GitLab | ✅ 可用 | Token 需 `write_repository` 权限；新仓库默认分支多为 `main` |
+| AtomGit | ✅ 可用 | 标准 Git 托管 + Token 鉴权 |
+| 自建 Git（Gogs / Gitea / Forgejo 等） | ✅ 可用 | 填对应 HTTPS 地址与有权限的 Token 即可 |
+
+> 注：应用自身的「在线更新检查」固定指向本项目仓库（`LXJ1203/lxj-mfa`），与上面「用户数据同步」是两套独立机制。
+
+### Git 用户名
+
+HTTPS Token 认证时，绝大多数平台会忽略用户名，因此「Git 用户名」可留空或填任意值（默认 `lxj-mfa`）。少数平台可能要求用户名与令牌所属账号一致，若遇到 `401` 鉴权失败，请填入你的登录用户名。
+
+### 常见踩坑
+
+1. **仓库要先自己建好**：同步只会 `clone / push`，不会自动创建仓库。请先在目标平台新建仓库（建议保留默认分支的初始提交），并确认分支名。
+2. **分支名对不上**：设置里默认分支是 `main`，但 Gitee 旧仓库默认 `master`、个别平台可能不同。分支不存在会导致 `pull` 失败、或 `push` 推不上去。请填与目标仓库实际默认分支一致的值。
+3. **只支持 HTTPS，不支持 SSH**：地址必须填 `https://...`，不要填 `git@...` 或 `ssh://...`。
+4. **空仓库首次同步**：若远端仓库完全是空的（连一次提交都没有），首次 `clone` 可能失败。建议远端先有一个初始提交（哪怕只有一个 README），克隆成功后本机会把 `lxj-mfa-backup.json` 提交并推送。
+5. **Token 权限不足**：返回 `401 / 403` 通常是 Token 没有写权限，或已过期 / 被撤销。请确认 Token 具备目标仓库的读写权限。
+6. **明文备份会永久留痕**：若关闭「同步时加密备份」，账号密钥将以明文写入 Git 历史，且无法撤销。强烈建议保持开启并设置「同步密码」（独立于本地主密码）。
+7. **自签名证书**：极少数自建 Git 使用自签名证书时，JGit 默认会拒绝。需在该 Git 服务侧配置受信任证书，或在客户端显式信任该证书（高级操作，需自行处理）。
+
 ## 贡献
 
 欢迎通过 Issue / Pull Request 参与贡献：
 
 1. Fork 本仓库并提交改动；
-2. 如遇崩溃，请在「设置 → 查看崩溃日志」中复制日志，并附到 [Issues](https://gitee.com/luan_xiaojian/lxj-mfa/issues) 中反馈。
+2. 如遇崩溃，请在「设置 → 查看崩溃日志」中复制日志，并附到 [Issues](https://gitee.com/LXJ1203/lxj-mfa/issues) 中反馈。
 
 ## 许可证
 

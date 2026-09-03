@@ -24,7 +24,7 @@ import androidx.core.content.ContextCompat
  */
 class CrashActivity : AppCompatActivity() {
 
-    private val issuesUrl = "https://gitee.com/luan_xiaojian/lxj-mfa/issues"
+    private val issuesUrl = "https://gitee.com/LXJ1203/lxj-mfa/issues"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

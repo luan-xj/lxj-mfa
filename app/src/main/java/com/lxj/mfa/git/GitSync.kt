@@ -27,7 +27,8 @@ object GitSync {
         val repoUrl = Prefs.getRepo(ctx)
         val branch = Prefs.getBranch(ctx)
         val token = Prefs.getToken(ctx)
-        val creds = UsernamePasswordCredentialsProvider("lxj-mfa", token)
+        val user = Prefs.getGitUser(ctx).ifBlank { "lxj-mfa" }
+        val creds = UsernamePasswordCredentialsProvider(user, token)
         val dir = repoDir(ctx)
         val git: Git = if (dir.exists() && File(dir, ".git").exists()) {
             Git.open(dir)
@@ -71,7 +72,8 @@ object GitSync {
     suspend fun pull(ctx: Context) = withContext(Dispatchers.IO) {
         val branch = Prefs.getBranch(ctx)
         val token = Prefs.getToken(ctx)
-        val creds = UsernamePasswordCredentialsProvider("lxj-mfa", token)
+        val user = Prefs.getGitUser(ctx).ifBlank { "lxj-mfa" }
+        val creds = UsernamePasswordCredentialsProvider(user, token)
         val dir = repoDir(ctx)
         val git: Git = if (dir.exists() && File(dir, ".git").exists()) {
             Git.open(dir)

@@ -31,6 +31,7 @@
     <string name="pull_from_git">从 Git 拉取</string>
     <string name="git_repo_url">Git 仓库地址 (HTTPS)</string>
     <string name="git_branch">分支</string>
+    <string name="git_user">Git 用户名 (可选)</string>
     <string name="git_token">访问令牌 (Token)</string>
     <string name="show_token">显示令牌</string>
     <string name="hide_token">隐藏令牌</string>
@@ -79,10 +80,11 @@
     <string name="help_h_lock">二、解锁与锁定</string>
     <string name="help_p_lock">• 首次使用需设置主密码，之后可用指纹或密码解锁。\n• 主界面右上角「立即锁定」可随时锁住软件。\n• 在设置里可设定「进入后台多久后自动锁定」（立即 / 1 / 5 / 15 分钟 / 从不）。</string>
     <string name="help_h_sync">三、Git 同步</string>
-    <string name="help_p_sync">• 在设置里填写 Git 仓库地址（HTTPS）、分支、访问令牌（Token）。\n• 「同步密码」独立于本地主密码，仅用于加密 Git 备份文件；两端用同一个同步密码即可互相恢复。\n• 建议开启「同步时加密备份」，备份文件即使泄露也无法解密。\n• 推送：把本机账号上传到仓库；拉取：从仓库恢复到本机。\n• 注意：空仓库需先在远端建好带初始提交的分支，首次克隆才能成功。</string>
+    <string name="help_p_sync">• 在设置里填写 Git 仓库地址（HTTPS）、分支、访问令牌（Token）。「Git 用户名」一般可留空（Token 认证时多数平台忽略它）。\n• 「同步密码」独立于本地主密码，仅用于加密 Git 备份文件；两端用同一个同步密码即可互相恢复。\n• 建议开启「同步时加密备份」，备份文件即使泄露也无法解密。\n• 推送：把本机账号上传到仓库；拉取：从仓库恢复到本机。\n• 注意：空仓库需先在远端建好带初始提交的分支，首次克隆才能成功。同步支持 Gitee / GitHub / GitLab / AtomGit 及各类自建 Git（Gogs / Gitea / Forgejo）。</string>
     <string name="help_h_security">四、安全说明</string>
     <string name="help_p_security">• 本地账号密钥用 Android 系统密钥库（AES）加密存储。\n• 主密码以 PBKDF2(SHA-256) 加盐哈希保存在本机，不以明文存储，也无法找回，请牢记。\n• Git 备份若开启加密，会使用同步密码（PBKDF2 + 随机盐）加密后上传。\n• 卸载软件会清除本机数据，重要账号请先同步到 Git。</string>
     <string name="git_repo_hint">填写 https:// 开头的仓库地址（如 GitHub / 自建 Git）</string>
+    <string name="git_user_hint">HTTPS Token 认证时绝大多数平台忽略用户名，可留空或填任意值；少数平台要求与令牌所属账号一致</string>
     <string name="open_help">使用说明</string>
     <string name="preview_title">预览验证码</string>
     <string name="preview_next">next: %1$s</string>

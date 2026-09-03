@@ -52,6 +52,10 @@ object Prefs {
     fun setRepo(ctx: Context, v: String) = sp(ctx).edit().putString("git_repo", v).apply()
     fun getBranch(ctx: Context) = sp(ctx).getString("git_branch", "main") ?: "main"
     fun setBranch(ctx: Context, v: String) = sp(ctx).edit().putString("git_branch", v).apply()
+    // Git 用户名：HTTPS Token 认证时多数平台忽略此值，可自定义；
+    // 默认 "lxj-mfa" 以兼容旧版写死行为。留空时同步逻辑会回退到该默认值。
+    fun getGitUser(ctx: Context) = sp(ctx).getString("git_user", "lxj-mfa") ?: "lxj-mfa"
+    fun setGitUser(ctx: Context, v: String) = sp(ctx).edit().putString("git_user", v).apply()
     // Git Token 用 AndroidKeyStore(AES) 加密后再存，不以明文落盘。
     // 兼容旧版明文：若解密失败，视为旧数据，迁移为密文后返回明文。
     fun getToken(ctx: Context): String {

@@ -41,6 +41,7 @@ class SettingsActivity : AppCompatActivity() {
 
         binding.etRepo.setText(Prefs.getRepo(this))
         binding.etBranch.setText(Prefs.getBranch(this))
+        binding.etGitUser.setText(Prefs.getGitUser(this))
         // 令牌不显示明文，默认用占位符；需主密码验证后才展示
         realToken = Prefs.getToken(this)
         binding.etToken.setText("••••••••••••")
@@ -52,6 +53,7 @@ class SettingsActivity : AppCompatActivity() {
 
         binding.etRepo.setOnFocusChangeListener { _, _ -> saveGitConfig() }
         binding.etBranch.setOnFocusChangeListener { _, _ -> saveGitConfig() }
+        binding.etGitUser.setOnFocusChangeListener { _, _ -> saveGitConfig() }
         binding.etToken.setOnFocusChangeListener { _, _ -> saveGitConfig() }
         binding.swEncrypt.setOnCheckedChangeListener { _, _ -> saveGitConfig() }
 
@@ -87,6 +89,7 @@ class SettingsActivity : AppCompatActivity() {
     private fun saveGitConfig() {
         Prefs.setRepo(this, binding.etRepo.text.toString().trim())
         Prefs.setBranch(this, binding.etBranch.text.toString().trim().ifEmpty { "main" })
+        Prefs.setGitUser(this, binding.etGitUser.text.toString().trim())
         // 令牌仅在用户主动“显示”并可能编辑后才写回；否则保留原密文，避免把占位符当明文保存
         if (tokenRevealed) {
             Prefs.setToken(this, binding.etToken.text.toString().trim())
