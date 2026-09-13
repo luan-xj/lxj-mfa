@@ -2,6 +2,6 @@
   "versionCode": 35,
   "versionName": "1.0.35",
   "apkUrl": "https://gitee.com/LXJ1203/lxj-mfa/releases/download/v1.0.35/LXJ-MFA-v1.0.35-release.apk",
-  "sha256": "3BE7D88FF2599DEDE657DC2456282EEBD75EDA2219A0261FDBF74EEA1953E9CF",
-  "changelog": "新增「按最近访问排序」：默认按最近一次复制验证码的时间排序，主菜单（⋮）→「排序」可切换为「按名称」排序，偏好本地保存。为支持该能力新增 accounts 表 last_used_at 字段并做 Room 数据库 2→3 迁移，旧数据自动兼容；每次复制验证码即记录访问时间。应用内更新器已校验 SHA256，下载后被篡改会自动拦截。"
+  "sha256": "ECCC53D7B97DE4A74F56897C8B93719AA7FC5EDD096BC9FE31F4DE9F599FA093",
+  "changelog": "修复 1.0.35 升级时因 Room 列名不匹配（last_used_at vs lastUsedAt）导致的启动闪退；补全「按最近访问排序」的访问时间记录（此前复制验证码未写入 lastUsedAt）。默认按最近访问排序，主菜单（⋮）→「排序」可切换为「按名称」排序，偏好本地保存；accounts 表含 last_used_at 字段（Room 2→3 迁移，旧数据自动兼容）。应用内更新器已校验 SHA256，下载后被篡改会自动拦截。"
 }

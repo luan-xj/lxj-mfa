@@ -170,11 +170,15 @@ class MainActivity : AppCompatActivity() {
                     .setPrimaryClip(ClipData.newPlainText("", ""))
             }
         }, 30_000L)
-        // HOTP：每次使用（复制）后计数器自增
-        if (a.type.uppercase() == "HOTP") {
-            lifecycleScope.launch {
-                AppDatabase.get(this@MainActivity).dao().upsert(a.copy(counter = a.counter + 1))
-            }
+        // 每次复制都记录访问时间（驱动「按最近访问排序」）；HOTP 额外自增计数器
+        lifecycleScope.launch {
+            val isHotp = a.type.uppercase() == "HOTP"
+            AppDatabase.get(this@MainActivity).dao().upsert(
+                a.copy(
+                    lastUsedAt = System.currentTimeMillis(),
+                    counter = if (isHotp) a.counter + 1 else a.counter
+                )
+            )
         }
     }
 

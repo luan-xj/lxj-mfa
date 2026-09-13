@@ -1,5 +1,6 @@
 package com.lxj.mfa.data
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -23,5 +24,6 @@ data class Account(
     val counter: Int = 0,
     val createdAt: Long = System.currentTimeMillis(),
     /** 最近一次访问（复制验证码）的时间戳，用于「按最近访问排序」；未访问过为 0 */
+    @ColumnInfo(name = "last_used_at")
     val lastUsedAt: Long = 0
 )
