@@ -35,6 +35,7 @@ LXJ-MFA 用原生 Kotlin 写成，支持 TOTP / HOTP / MOTP / STEAM 等常见动
 | 算法 | SHA1 / SHA256 / SHA512 |
 | 导入方式 | 扫描二维码、手动添加 |
 | 检索 | 按 issuer / label / tag / type / algorithm 模糊搜索 |
+| 排序 | 支持「按最近访问」「按名称」两种方式，主菜单可切换，默认按最近访问 |
 | 本地安全 | 主密码 + `PBKDF2WithHmacSHA256` + Android Keystore + `EncryptedSharedPreferences` |
 | 启动锁 | 指纹 / 面容 / 密码锁定 |
 | 备份同步 | Git 加密备份与多设备同步（JGit + HTTPS Token，支持 Gitee / GitHub / GitLab / AtomGit / 自建 Git） |

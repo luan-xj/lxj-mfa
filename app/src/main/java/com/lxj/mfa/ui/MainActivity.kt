@@ -44,7 +44,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: AccountAdapter
     private lateinit var updater: Updater
     private val handler = Handler(Looper.getMainLooper())
-    private companion object { var sCheckedUpdate = false }
+    private var sortMode = SORT_RECENT
+    private companion object {
+        const val SORT_RECENT = 0
+        const val SORT_NAME = 1
+        var sCheckedUpdate = false
+    }
     private val ticker = object : Runnable {
         override fun run() {
             adapter.tick()
@@ -114,10 +119,25 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        menu.findItem(R.id.sort_recent)?.isChecked = sortMode == SORT_RECENT
+        menu.findItem(R.id.sort_name)?.isChecked = sortMode == SORT_NAME
+        return super.onPrepareOptionsMenu(menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.action_settings -> { startActivity(Intent(this, SettingsActivity::class.java)); true }
         R.id.action_lock -> { lockNow(); true }
+        R.id.sort_recent -> { changeSortMode(SORT_RECENT); true }
+        R.id.sort_name -> { changeSortMode(SORT_NAME); true }
         else -> super.onOptionsItemSelected(item)
+    }
+
+    private fun changeSortMode(mode: Int) {
+        sortMode = mode
+        Prefs.setSortMode(this, mode)
+        adapter.applySort(mode)
+        invalidateOptionsMenu()
     }
 
     private fun lockNow() {
@@ -328,6 +348,7 @@ class MainActivity : AppCompatActivity() {
         private var all: List<Account> = emptyList()
         private var query: String = ""
         private var items: List<Account> = emptyList()
+        var sortMode: Int = SORT_RECENT
 
         fun submit(list: List<Account>) {
             all = list
@@ -336,6 +357,11 @@ class MainActivity : AppCompatActivity() {
 
         fun setQuery(q: String) {
             query = q.trim().lowercase()
+            applyFilter()
+        }
+
+        fun applySort(mode: Int) {
+            sortMode = mode
             applyFilter()
         }
 
@@ -351,7 +377,17 @@ class MainActivity : AppCompatActivity() {
                     a.algorithm.lowercase().contains(query)
                 }
             }
-            items = filtered
+            items = when (sortMode) {
+                SORT_RECENT -> filtered.sortedWith(
+                    compareByDescending<Account> { it.lastUsedAt }
+                        .thenBy { it.issuer.lowercase() }
+                        .thenBy { it.label.lowercase() }
+                )
+                else -> filtered.sortedWith(
+                    compareBy<Account> { it.issuer.lowercase() }
+                        .thenBy { it.label.lowercase() }
+                )
+            }
             notifyDataSetChanged()
         }
 

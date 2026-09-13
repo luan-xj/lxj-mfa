@@ -121,4 +121,9 @@ object Prefs {
     fun getLastUpdateCheck(ctx: Context) = sp(ctx).getLong("last_update_check", 0L)
     fun setLastUpdateCheck(ctx: Context, ms: Long) =
         sp(ctx).edit().putLong("last_update_check", ms).apply()
+
+    // ---------- 列表排序方式：0=按最近访问，1=按名称（默认 0=最近访问） ----------
+    fun getSortMode(ctx: Context) = sp(ctx).getInt("sort_mode", 0)
+    fun setSortMode(ctx: Context, mode: Int) =
+        sp(ctx).edit().putInt("sort_mode", mode).apply()
 }

@@ -112,4 +112,8 @@
     <string name="crash_cleared">已清除本地崩溃日志</string>
     <string name="crash_open_issue">前往提交 Issue</string>
     <string name="back">返回</string>
+
+    <string name="sort_by">排序</string>
+    <string name="sort_recent">按最近访问</string>
+    <string name="sort_name">按名称</string>
 </resources>

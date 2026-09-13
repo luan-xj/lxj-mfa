@@ -11,4 +11,20 @@
         android:icon="@drawable/ic_lock"
         android:title="@string/lock_now"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/action_sort"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:title="@string/sort_by"
+        app:showAsAction="never">
+        <menu>
+            <item
+                android:id="@+id/sort_recent"
+                android:title="@string/sort_recent"
+                android:checkable="true" />
+            <item
+                android:id="@+id/sort_name"
+                android:title="@string/sort_name"
+                android:checkable="true" />
+        </menu>
+    </item>
 </menu>

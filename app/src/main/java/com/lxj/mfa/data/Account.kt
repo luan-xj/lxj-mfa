@@ -21,5 +21,7 @@ data class Account(
     val tag: String = "",
     /** HOTP 计数器，每次使用自增 */
     val counter: Int = 0,
-    val createdAt: Long = System.currentTimeMillis()
+    val createdAt: Long = System.currentTimeMillis(),
+    /** 最近一次访问（复制验证码）的时间戳，用于「按最近访问排序」；未访问过为 0 */
+    val lastUsedAt: Long = 0
 )
