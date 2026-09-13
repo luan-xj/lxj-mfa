@@ -1,7 +1,7 @@
 {
-  "versionCode": 35,
-  "versionName": "1.0.35",
-  "apkUrl": "https://gitee.com/LXJ1203/lxj-mfa/releases/download/v1.0.35/LXJ-MFA-v1.0.35-release.apk",
-  "sha256": "ECCC53D7B97DE4A74F56897C8B93719AA7FC5EDD096BC9FE31F4DE9F599FA093",
-  "changelog": "修复 1.0.35 升级时因 Room 列名不匹配（last_used_at vs lastUsedAt）导致的启动闪退；补全「按最近访问排序」的访问时间记录（此前复制验证码未写入 lastUsedAt）。默认按最近访问排序，主菜单（⋮）→「排序」可切换为「按名称」排序，偏好本地保存；accounts 表含 last_used_at 字段（Room 2→3 迁移，旧数据自动兼容）。应用内更新器已校验 SHA256，下载后被篡改会自动拦截。"
+  "versionCode": 36,
+  "versionName": "1.0.36",
+  "apkUrl": "https://gitee.com/LXJ1203/lxj-mfa/releases/download/v1.0.36/LXJ-MFA-v1.0.36-release.apk",
+  "sha256": "CAF3B7FA48577DA9F4C260E9EBD3CE39C11F188F66D4C34B7D139BA1D4040CA6",
+  "changelog": "修复「Git 数据同步」设置页的致命 bug：此前在令牌输入框直接填写访问令牌时，因保存逻辑要求先点「显示令牌」并验证主密码（tokenRevealed 闸门），导致令牌从未被持久化，一点「同步/拉取」就反复提示“请先填写仓库地址与 Token”。现已支持直接填写并保存；未存过令牌时输入框留空、聚焦自动清空占位符，失焦且未改动则恢复原令牌，不再误清空。同时修复 1.0.35 升级时 Room 列名不匹配导致的启动闪退，并补全「按最近访问排序」功能。应用内更新器已校验 SHA256，下载后被篡改会自动拦截。"
 }

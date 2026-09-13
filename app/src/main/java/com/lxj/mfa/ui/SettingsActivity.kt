@@ -25,6 +25,7 @@ class SettingsActivity : AppCompatActivity() {
     // 令牌默认打码，仅在主密码验证后才显示明文
     private var realToken: String = ""
     private var tokenRevealed = false
+    private val tokenMask = "••••••••••••"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +45,7 @@ class SettingsActivity : AppCompatActivity() {
         binding.etGitUser.setText(Prefs.getGitUser(this))
         // 令牌不显示明文，默认用占位符；需主密码验证后才展示
         realToken = Prefs.getToken(this)
-        binding.etToken.setText("••••••••••••")
+        binding.etToken.setText(if (realToken.isEmpty()) "" else tokenMask)
         binding.etToken.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
         binding.btnShowToken.setOnClickListener { toggleToken() }
         binding.swEncrypt.isChecked = Prefs.getEncryptBackup(this)
@@ -54,7 +55,20 @@ class SettingsActivity : AppCompatActivity() {
         binding.etRepo.setOnFocusChangeListener { _, _ -> saveGitConfig() }
         binding.etBranch.setOnFocusChangeListener { _, _ -> saveGitConfig() }
         binding.etGitUser.setOnFocusChangeListener { _, _ -> saveGitConfig() }
-        binding.etToken.setOnFocusChangeListener { _, _ -> saveGitConfig() }
+        binding.etToken.setOnFocusChangeListener { _, hasFocus ->
+            val cur = binding.etToken.text.toString()
+            if (hasFocus) {
+                // 未显式展示时，焦点进入清空占位符，方便直接输入新令牌
+                if (!tokenRevealed && cur == tokenMask) binding.etToken.setText("")
+            } else {
+                // 失焦且未改动、原本有令牌：恢复占位符，避免把原令牌清空
+                val txt = binding.etToken.text.toString().trim()
+                if (txt.isEmpty() && realToken.isNotEmpty() && !tokenRevealed) {
+                    binding.etToken.setText(tokenMask)
+                }
+            }
+            saveGitConfig()
+        }
         binding.swEncrypt.setOnCheckedChangeListener { _, _ -> saveGitConfig() }
 
         binding.btnSync.setOnClickListener {
@@ -90,9 +104,17 @@ class SettingsActivity : AppCompatActivity() {
         Prefs.setRepo(this, binding.etRepo.text.toString().trim())
         Prefs.setBranch(this, binding.etBranch.text.toString().trim().ifEmpty { "main" })
         Prefs.setGitUser(this, binding.etGitUser.text.toString().trim())
-        // 令牌仅在用户主动“显示”并可能编辑后才写回；否则保留原密文，避免把占位符当明文保存
+        // 令牌保存规则（修复“填了却仍提示未填写”的 bug）：
+        // - 已点“显示令牌”并编辑过：以当前内容为准（可清空以移除令牌）；
+        // - 未显式展示但用户输入了非占位符内容：同样视为新令牌保存。
+        // 这样无需先“显示”也能直接填写并持久化。
+        val tok = binding.etToken.text.toString().trim()
         if (tokenRevealed) {
-            Prefs.setToken(this, binding.etToken.text.toString().trim())
+            Prefs.setToken(this, tok)
+            realToken = tok
+        } else if (tok.isNotEmpty() && tok != tokenMask) {
+            Prefs.setToken(this, tok)
+            realToken = tok
         }
         Prefs.setEncryptBackup(this, binding.swEncrypt.isChecked)
     }
