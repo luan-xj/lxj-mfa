@@ -4,7 +4,7 @@
 > 无广告、无追踪、数据只留在你的设备和你的 Git 仓库里，绿色安全。
 
 LXJ-MFA 用原生 Kotlin 写成，支持 TOTP / HOTP / MOTP / STEAM 等常见动态口令算法。扫码即添加、启动即锁、本地加密存储，加密备份同步完全走你自己的仓库，不经过任何第三方服务器。
-## 欢迎使用浏览器插件版本：[lxj-mfa-extension](https://gitee.com/LXJ1203/lxj-mfa-extension.git)
+## 浏览器插件版本通道→[lxj-mfa-extension](https://gitee.com/LXJ1203/lxj-mfa-extension.git)
 ## 为什么选择 LXJ-MFA？
 
 | 特点 | 说明 |
@@ -104,7 +104,7 @@ HTTPS Token 认证时，绝大多数平台会忽略用户名，因此「Git 用�
 1. Fork 本仓库并提交改动；
 2. 如遇崩溃，请在「设置 → 查看崩溃日志」中复制日志，并附到 [Issues](https://gitee.com/LXJ1203/lxj-mfa/issues) 中反馈。
 
-## 欢迎使用浏览器插件版本：[lxj-mfa-extension](https://gitee.com/LXJ1203/lxj-mfa-extension.git)
+## 浏览器插件版本通道→[lxj-mfa-extension](https://gitee.com/LXJ1203/lxj-mfa-extension.git)
 
 ## 许可证
 
